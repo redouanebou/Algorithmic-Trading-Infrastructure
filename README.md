@@ -87,6 +87,8 @@ Live Trading ("The Master"):
 
 Monitors market state -> Fetches Real-time Data -> Generates Features -> Queries the "Brain" -> Executes Orders.
 
+Read the story behind this architecture on Medium https://medium.com/@redouanebou61/the-backtesters-lie-my-4-month-hunt-for-a-time-travel-bug-1ca8e4b15d70
+
 ⚠️ The "Reality Check" Philosophy
 This project was born from the realization that 99% of trading bots fail due to Data Leakage (peeking at future data). Sentinel is built to be paranoid. It assumes the market is adversarial. By using an Autoencoder to reject "weird" data and enforcing strict causal feature engineering, the system prioritizes Robustness over hypothetical hyper-optimized returns.
 
