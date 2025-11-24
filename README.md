@@ -1,89 +1,84 @@
-🤖 Hybrid Quantitative Trading Infrastructure: XGBoost & Autoencoder
+🛡️ Sentinel: Hybrid Quantitative Trading Infrastructure
+An institutional-grade algorithmic trading ecosystem designed for regime-based market prediction. Features a "Safety-First" architecture combining Gradient Boosting (XGBoost) for directional alpha and Deep Learning Autoencoders for anomaly detection.
 
-An institutional-grade algorithmic trading system leveraging ensemble machine learning for regime-based market prediction. Engineered with a "Safety-First" architecture, combining XGBoost for trend classification and Deep Learning (Autoencoders) for anomaly detection.
+📖 Executive Summary
+Sentinel is not just a trading bot; it is a comprehensive Quantitative Research & Execution Pipeline engineered to solve the "Trilogy of Failure" in algorithmic trading: Look-ahead Bias, Overfitting, and Market Regime Shifts.
 
-📖 Overview
-This project represents a complete end-to-end quantitative trading pipeline, built from scratch to solve the hardest problems in algorithmic trading: Overfitting, Look-ahead Bias, and Market Regime Shifts.
+While most retail bots rely on lagging indicators, Sentinel employs a Hybrid AI Architecture. It dynamically classifies market states (e.g., Low Volatility vs. High Volatility) and deploys specialized "Agent" models. Crucially, it integrates a Forensic Data Pipeline that enforces strict causal integrity, ensuring that every backtest signal is theoretically executable in a live environment.
 
-Unlike traditional bots that rely on static indicators, this system utilizes a Hybrid Regime Architecture. It dynamically classifies market conditions into "High Volatility" (Breaker) and "Low Volatility" (Scalper) regimes, deploying specialized XGBoost models optimized for each state. To ensure robustness, a Keras Autoencoder acts as a gatekeeper, filtering out anomalous market data (statistically distinct from training distributions) to prevent trading during unpredictable "Black Swan" events or data corruptions.
-
-The system features a Live Bridge to MetaTrader 5 (MT5) for real-time low-latency execution and a rigorous Event-Driven Backtester designed to expose realistic performance by accounting for variable spreads, slippage, and commissions.
+The system features a robust Live Bridge to MetaTrader 5 (MT5), handling real-time data ingestion, signal inference, and sub-second order execution with dynamic risk sizing.
 
 🧠 Core Architecture
-1. The "Hybrid Brain" (Ensemble Learning)
-The system does not rely on a single model. It employs a "Specialist" approach:
+1. The "Hybrid Brain" (Ensemble Logic)
+The decision engine does not rely on a single monolithic model. Instead, it uses a "Committee of Experts" approach:
 
-Regime Filter: A causal, leak-proof volatility filter (comparing current ATR to long-term moving averages) splits the market into two states.
+Regime Detection: A causal volatility filter (comparing short-term vs. long-term ATR) splits the market into distinct regimes (e.g., Scalper vs. Breaker).
 
-Models:
+Directional Alpha (XGBoost): Specialized classifiers trained on Triple Barrier Labels (Fixed TP, SL, and Time-out horizons) to predict price direction with high probability.
 
-XGBoost Regressors/Classifiers: Trained specifically on Triple Barrier Labels (Take Profit, Stop Loss, Time-out) to predict directional probability.
-
-Autoencoder (TensorFlow/Keras): A deep neural network trained to reconstruct "normal" market features. High Reconstruction Error signals an anomaly, triggering a "No-Trade" safety lock.
+Anomaly Detection (Autoencoder): A deep neural network (Keras) trained to reconstruct "normal" market features. High Reconstruction Error signals a statistical anomaly or "Black Swan" event, triggering a hard "No-Trade" lock to preserve capital.
 
 2. Forensic Data Engineering
-The pipeline enforces strict Causal Integrity:
+The pipeline is built on a philosophy of "Honest AI":
 
-Anti-Lookahead Protocols: All features are shifted (t-1) prior to inference. The regime filter uses a proven causal logic (comparing ATR[t-1] vs Mean(ATR[t-480...t-1])) to ensure zero leakage of future data.
+Anti-Leakage Protocols: All feature engineering is strictly time-shifted (t-1) prior to inference.
 
-Feature Engineering: Includes statistical z-scores, volume regime analysis, and custom price action derivatives (e.g., F-35 Pullback logic).
+Advanced Feature Sets: Includes statistical z-scores, volume regime analysis, and custom price action derivatives (e.g., F-35 Pullback logic for trend continuation).
+
+Robust Normalization: Uses adaptive scaling to ensure models remain stable across different price levels and eras.
 
 3. Live Execution Engine (MT5 Bridge)
-Real-Time Synchronization: Connects to MetaTrader 5 via API to fetch OHLCV data, sync positions, and execute orders with sub-second latency.
+Real-Time Synchronization: A threaded loop connects to the MetaTrader 5 API, syncing candle closures to within milliseconds.
 
-Dynamic Risk Management: Automatically calculates position size based on account equity and volatility-adjusted Stop Loss distances (ATR Multiples).
+Dynamic Risk Management: Position sizing is calculated dynamically based on account equity and volatility-adjusted Stop Loss distances (ATR Multiples).
 
-Self-Healing: Handles connection drops, API timeouts, and data gaps autonomously.
+Resilience: Self-healing logic handles API timeouts, connection drops, and data gaps without crashing.
 
 🛠️ Technical Stack
-Core Language: Python 3.10+
+Core: Python 3.10+
 
 Machine Learning:
 
-XGBoost (Gradient Boosting for Directional Prediction)
+XGBoost (Gradient Boosting for Classification/Regression)
 
-TensorFlow / Keras (Autoencoders for Anomaly Detection)
+TensorFlow / Keras (Autoencoders for Unsupervised Learning)
 
-Scikit-Learn (Data Scaling & Pipelines)
+Scikit-Learn (Pipelines & Scaling)
 
-Data Engineering:
+Data Science:
 
 Pandas & NumPy (High-performance Vectorization)
 
-Pandas-TA & TA-Lib (Technical Indicators)
+Pandas-TA (Technical Analysis Library)
 
-Numba (JIT Compilation for Backtesting loops)
+Numba (JIT Compilation for high-speed backtesting loops)
 
-Execution:
+Integration:
 
-MetaTrader5 (Python API Integration)
+MetaTrader5 (Python API for Broker connectivity)
 
-🚀 Workflow
-Ingestion: Raw M1/Tick data is ingested, cleaned, and resampled (e.g., to M3 or M15) with gap-filling logic.
+🚀 Workflow: From Research to Production
+Forensic Ingestion: Raw tick/M1 data is ingested, cleaned, and resampled with gap-filling logic to create a pristine dataset.
 
-Training (The "Trainer"):
+Model Training ("The Trainer"):
 
-Generates Triple Barrier Labels to define "True" buy/sell opportunities.
+Generates "Honest" labels based on future outcomes (Triple Barrier Method).
 
-Splits data into Train/Validation sets (strictly time-series split).
+Trains the Autoencoder to learn the manifold of "safe" market conditions.
 
-Trains the Autoencoder to learn the "manifold" of normal market data.
+Trains XGBoost agents on the latent features + technical indicators.
 
-Trains XGBoost models on the latent features + technical indicators.
+Validation ("The Backtester"):
 
-Validation (The "Backtester"):
+Runs an event-driven simulation on Unseen Out-of-Sample Data.
 
-Simulates trading on unseen data using an event-driven loop.
+Accounts for Spread, Slippage, and Commissions to simulate realistic P&L.
 
-Applies realistic costs (Spread + Commission).
+Live Trading ("The Master"):
 
-Logs every decision for "Forensic" review.
+Monitors market state -> Fetches Real-time Data -> Generates Features -> Queries the "Brain" -> Executes Orders.
 
-Live Trading (The "Master"):
+⚠️ The "Reality Check" Philosophy
+This project was born from the realization that 99% of trading bots fail due to Data Leakage (peeking at future data). Sentinel is built to be paranoid. It assumes the market is adversarial. By using an Autoencoder to reject "weird" data and enforcing strict causal feature engineering, the system prioritizes Robustness over hypothetical hyper-optimized returns.
 
-Waits for candle closure -> Fetches Data -> Generates Features -> Queries Models -> Executes Trade.
-
-⚠️ Methodology: "Honest" AI
-This project was born out of a frustration with "fake" backtests. Many trading bots fail because they accidentally peek at future data (e.g., using the High of the current candle to decide entry).This system is built to be paranoid. It assumes the market is trying to trick the model. By enforcing strict causal feature engineering and using an Autoencoder to reject "weird" data, we prioritize Capital Preservation over hypothetical gains.
-
-Disclaimer: This software is for educational and research purposes only. Algorithmic trading involves significant risk of financial loss.
+Disclaimer: This software is for educational and research purposes only. Algorithmic trading involves significant risk of financial loss. of financial loss.
