@@ -57,6 +57,15 @@ Integration:
 
 MetaTrader5 (Python API for Broker connectivity)
 
+🧬 Forensic Data Pipeline (ETL)
+A custom-built ETL engine designed to sanitize institutional-grade financial data (Tick Data Suite) for ML training.
+
+Gap Filling: Uses forward-fill logic to repair missing M1 candles (preventing time-series distortion).
+
+Resampling Engine: Converts M1 base data into custom timeframes (M3, M10) with precise aggregation rules.
+
+Latency Handling: Ensures candle closing times align with broker server time (handling the xx:59 vs 00:00 timestamp nuances) to guarantee zero lookahead bias during backtesting.
+
 🚀 Workflow: From Research to Production
 Forensic Ingestion: Raw tick/M1 data is ingested, cleaned, and resampled with gap-filling logic to create a pristine dataset.
 
