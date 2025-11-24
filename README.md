@@ -1,4 +1,5 @@
-#🤖 Hybrid Quantitative Trading Infrastructure: XGBoost & Autoencoder
+🤖 Hybrid Quantitative Trading Infrastructure: XGBoost & Autoencoder
+
 An institutional-grade algorithmic trading system leveraging ensemble machine learning for regime-based market prediction. Engineered with a "Safety-First" architecture, combining XGBoost for trend classification and Deep Learning (Autoencoders) for anomaly detection.
 
 📖 Overview
