@@ -19,15 +19,15 @@
 
 ## 📖 Executive Summary
 
-**Sentinel** is a comprehensive Quantitative Research & Execution Pipeline. It employs a **Hybrid AI Architecture** that dynamically classifies market states and deploys specialized "Agent" models.
+**Sentinel** is a comprehensive Quantitative Research & Execution Pipeline bridging the gap between backtest theory and live market execution. Unlike standard retail bots, Sentinel employs a **Hybrid AI Architecture** that dynamically classifies market regimes and deploys specialized "Agent" models.
 
-It integrates a **Forensic Data Pipeline** enforcing strict causal integrity ($T-1$), ensuring backtest signals are theoretically executable in live environments via the MetaTrader 5 bridge.
+It integrates a **Forensic Data Pipeline** ensuring strict causal integrity ($T-1$), making all backtest signals theoretically executable live via the MetaTrader 5 bridge.
 
 ---
 
 ## 🧠 Core Architecture: The "Hybrid Brain"
 
-The decision engine uses a **"Committee of Experts"** topology:
+The decision engine uses a **"Committee of Experts"** structure:
 
 ```mermaid
 graph TD
@@ -50,23 +50,25 @@ graph TD
     end
 ```
 
+---
+
 ### 1. Ensemble Logic
 
 * **Regime Detection:** Causal volatility filter (Short-term vs. Long-term ATR) splits market into Scalper vs. Breaker regimes.
-* **Directional Alpha (XGBoost):** Specialized classifiers trained on Triple Barrier Labels (Fixed TP, SL, Time-out).
-* **Anomaly Detection (Autoencoder):** Deep Neural Network (Keras) identifies out-of-distribution patterns, triggering a "No-Trade" lock.
+* **Directional Alpha (XGBoost):** Classifiers trained on Triple Barrier Labels (TP, SL, Time-out).
+* **Anomaly Detection (Autoencoder):** Neural network reconstructs "normal" market patterns; high error triggers a safety lock.
 
 ### 2. Forensic Data Engineering ("Honest AI")
 
-* **Anti-Leakage Protocols:** Feature engineering is strictly time-shifted (shift(1)) prior to inference.
-* **Advanced Features:** Statistical Z-Scores, Volume Regimes, Price Action Derivatives.
-* **Robust Normalization:** Adaptive scaling fitted only on training folds to prevent distribution drift.
+* **Anti-Leakage Protocols:** All features strictly time-shifted (shift(1)) prior to inference.
+* **Advanced Features:** Statistical Z-Scores, Volume Regimes, Price Action derivatives.
+* **Robust Normalization:** Adaptive scaling fitted only on training folds.
 
 ### 3. Live Execution Engine (MT5 Bridge)
 
-* **Real-Time Sync:** Threaded loop syncing candle closures to milliseconds.
+* **Real-Time Sync:** Threaded loop syncing candle closures.
 * **Dynamic Risk:** Position sizing based on Account Equity % and Volatility-Adjusted Stop Loss.
-* **Self-Healing:** Handles API timeouts and connection drops autonomously.
+* **Self-Healing:** Handles API timeouts and connection drops.
 
 ---
 
@@ -74,22 +76,20 @@ graph TD
 
 | Component    | Technology       | Description                                      |
 | ------------ | ---------------- | ------------------------------------------------ |
-| Core Logic   | Python 3.10+     | Asynchronous Event Loop & Orchestration          |
-| Alpha Model  | XGBoost          | Gradient Boosting for Directional Classification |
-| Safety Model | TensorFlow/Keras | Autoencoder for Out-of-Distribution Detection    |
-| Data Ops     | Pandas / NumPy   | High-performance Vectorization                   |
-| Broker API   | MetaTrader 5     | Direct DMA/STP Execution Bridge                  |
-| Optimization | Numba            | JIT Compilation for Backtesting Loops            |
+| Core Logic   | Python 3.10+     | Async event loop & orchestration                 |
+| Alpha Model  | XGBoost          | Gradient Boosting for directional classification |
+| Safety Model | TensorFlow/Keras | Autoencoder for OOD detection                    |
+| Data Ops     | Pandas / NumPy   | High-performance vectorization                   |
+| Broker API   | MetaTrader 5     | Direct DMA/STP execution bridge                  |
+| Optimization | Numba            | JIT compilation for backtesting loops            |
 
 ---
 
 ## 🧬 Forensic Data Pipeline (ETL)
 
-Custom ETL engine (`data_engineering.py`) for institutional data:
-
-* **Gap Filling:** Forward-fill logic repairs missing M1 candles.
+* **Gap Filling:** Forward-fill missing M1 candles.
 * **Resampling Engine:** Converts M1 to M3/M10 timeframes with precise aggregation.
-* **Latency Handling:** Aligns candle closures with broker server to prevent Look-Ahead Bias.
+* **Latency Handling:** Aligns candle closures with broker server time to prevent Look-Ahead Bias.
 
 ---
 
@@ -97,10 +97,10 @@ Custom ETL engine (`data_engineering.py`) for institutional data:
 
 ```bash
 Algorithmic-Trading-Infrastructure/
-├── data_engineering.py     # ETL & Forensic Cleaning
-├── trainer.py              # Model Training (XGBoost + Autoencoder)
-├── backtester.py           # Event-Driven Validation Engine
-├── master.py               # Live Execution Bridge (MT5)
+├── data_engineering.py     # ETL & forensic cleaning
+├── trainer.py              # Model training (XGBoost + Autoencoder)
+├── backtester.py           # Event-driven validation engine
+├── master.py               # Live execution bridge (MT5)
 └── README.md               # Documentation
 ```
 
@@ -108,26 +108,26 @@ Algorithmic-Trading-Infrastructure/
 
 ## 🚀 Workflow: Research to Production
 
-1. **Forensic Ingestion:** Clean and resample raw tick data.
-2. **The Trainer:**
+1. **Forensic Ingestion:** Clean & resample raw tick data.
+2. **Trainer:**
 
    * Generates "Honest" Triple Barrier Labels.
-   * Trains Autoencoder on "Safe" market manifolds.
+   * Trains Autoencoder on safe market manifolds.
    * Trains XGBoost Agents on latent features.
-3. **The Backtester:** Runs event-driven simulations on Out-of-Sample data with spread/slippage modeling.
-4. **The Master:** Deploys the ensemble to Live Trading.
+3. **Backtester:** Event-driven simulations on out-of-sample data, including spread/slippage.
+4. **Master:** Deploys ensemble to live trading.
 
 ---
 
-## ⚠️ The "Reality Check" Philosophy
+## ⚠️ Reality Check Philosophy
 
-99% of trading bots fail due to Data Leakage. Sentinel assumes the market is adversarial:
+99% of trading bots fail due to data leakage. Sentinel is designed for robustness:
 
 * Autoencoder rejects anomalous data.
-* Strict causal feature engineering prioritizes robustness over hypothetical hyper-optimized returns.
+* Strict causal feature engineering prevents look-ahead bias.
 
 <div align="center">
-  Disclaimer: This software is for educational and research purposes only. Algorithmic trading involves significant financial risk.
+  **Disclaimer:** This software is for educational & research purposes only. Algorithmic trading involves significant financial risk.
 </div>
 
 Engineered by Redouane Boundra.
