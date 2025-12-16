@@ -384,7 +384,7 @@ def run_validation_backtest(
     profit_factor = gross_profit / gross_loss if gross_loss > 0 else np.inf
     win_rate = (log_df['profit'] > 0).mean()
     
-    print(f"\n---Redouane Boundra FINAL PERFORMANCE REPORT ({log_df.index.min().date()} - {log_df.index.max().date()}) ---")
+    print(f"\n---@Redouane.Boundra FINAL PERFORMANCE REPORT ({log_df.index.min().date()} - {log_df.index.max().date()}) ---")
     print("=" * 40)
     print(f"Start Balance:       ${INITIAL_BALANCE:,.2f}")
     print(f"End Balance:         ${end_balance:,.2f}")
@@ -486,4 +486,5 @@ def main():
     )
 
 if __name__ == "__main__":
+
     main()
