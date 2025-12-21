@@ -346,7 +346,7 @@ def run_validation_backtest(
     print("\n--- V27 (LOW VOL ONLY) VALIDATION COMPLETE ---")
     
     if not trade_log:
-        print("No trades were taken during the validation period.")
+        print("No trades were taken during the validation period")
         return
 
     log_df = pd.DataFrame(trade_log)
@@ -488,3 +488,4 @@ def main():
 if __name__ == "__main__":
 
     main()
+
