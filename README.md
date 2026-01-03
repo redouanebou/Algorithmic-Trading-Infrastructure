@@ -1,6 +1,6 @@
 <div align="center">
 
-# 🛡️ Sentinel: Hybrid Quantitative Trading Infrastructure
+# 🛡️ Sentinel: Hybrid Quantitative Trading Infrastructure!
 
 ### Regime-Adaptive Institutional Execution Engine
 
