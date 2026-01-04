@@ -25,7 +25,7 @@ It integrates a **Forensic Data Pipeline** ensuring strict causal integrity ($T-
 
 ---
 
-## 🧠 Core Architecture: The "Hybrid Brain"
+## 🧠 Core Architecture :  The "Hybrid Brain"
 
 The decision engine uses a **"Committee of Experts"** structure:
 
